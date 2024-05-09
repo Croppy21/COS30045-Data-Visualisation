@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Visualisation">
+    <meta name="keywords" content="HTML, CSS, D3">
+    <meta name="author" content="Mack Cropman">
+    <title>Visualisations</title>
+    <!-- Include D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        footer {
+            color: grey;
+        }
+
+        .carousel-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .visual-info{
+            width: 30%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+            text-align: center;
+        }
+
+        .carousel-container {
+
+            width: 80%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .carousel {
+
+            flex-direction: column; /* Adjusted to stack elements vertically */
+            align-items: center; /* Center elements horizontally */
+            transition: transform 0.5s ease;
+        }
+
+        .carousel-item {
+            width: 100%; /* Adjusted width for centering */
+            margin-bottom: 20px; /* Added margin for spacing */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        svg {
+            width: 100%; /* Make SVG fill its parent container */
+            height: auto; /* Maintain aspect ratio */
+            margin-left: 30%;
+        }
+
+        #prevBtn,
+        #nextBtn {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            cursor: pointer;
+            margin: 10px;
+            align-content: center;
+        }
+
+    </style>
+</head>
+
+<body>
+    <a href="index.html"><h1>Data Visualisations Assignment</h1></a><br>
+    <div class="carousel-container">
+        <button type="button" id="prevBtn">&#10094; Prev</button>
+        <button type="button" id="nextBtn">Next &#10095;</button>
+        <div class="carousel" id="carousel">
+            <!-- Visual 1: Bar Chart 1 -->
+            <div class="carousel-item" id="visual1">
+                <h1>Vis 1</h1>
+                <div class="carousel-info">
+                    <div id="info1" class="visual-info">
+                        <p>Information about Visual 1</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Visual 2: Bar Chart 2 -->
+            <div class="carousel-item" id="visual2">
+                <h1>Vis 2</h1>
+                <div class="carousel-info">
+                    <div id="info2" class="visual-info">
+                        <p>Information about Visual 2</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Visual 1: Bar Chart 3 -->
+            <div class="carousel-item" id="visual3">
+                <h1>Vis 3</h1>
+                <div class="carousel-info">
+                    <div id="info3" class="visual-info">
+                        <p>Information about Visual 3</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
