@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Data Visualisation">
+    <meta name="keywords" content="HTML, CSS, D3">
+    <meta name="author" content="Mack Cropman">
+    <title>Life Expectancy</title>
+    <!-- Include D3.js library -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <a href="index.html">
+        <h1 class="HomeLink"> Emerging vs. Established Causes of Death</h1>
+    </a><br>
+    <div class="NavButtons">
+        <button type="button" onclick="location.href='Established.html'">Established Causes Of Death</button>
+        <button type="button" onclick="location.href='Emerging.html'">Emerging Causes of Death</button>
+        <button class="setActiveButton" type="button" onclick="location.href='LifeExpectancy.html'">Life
+            Expectancy</button>
+    </div><br>
+    <div id="ChartYears">
+        <button id="year2018" class="yearButton" type="button"
+            onclick="setActiveButton('year2018', 'Data/LifeExpectancy/LifeExpectancy2018.csv')">2018</button>
+        <button id="year2019" class="yearButton" type="button"
+            onclick="setActiveButton('year2019', 'Data/LifeExpectancy/LifeExpectancy2019.csv')">2019</button>
+        <button id="year2020" class="yearButton" type="button"
+            onclick="setActiveButton('year2020', 'Data/LifeExpectancy/LifeExpectancy2020.csv')">2020</button>
+        <button id="year2021" class="yearButton" type="button"
+            onclick="setActiveButton('year2021', 'Data/LifeExpectancy/LifeExpectancy2021.csv')">2021</button>
+        <button id="year2022" class="yearButton" type="button"
+            onclick="setActiveButton('year2022', 'Data/LifeExpectancy/LifeExpectancy2022.csv')">2022</button>
+    </div><br>
+    <svg width="960" height="500"></svg><br>
+    <p>This here will be info about the Visual</p><br><br>
+    <script src="script.js"></script>
+</body>
+
+</html>

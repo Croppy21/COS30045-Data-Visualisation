@@ -1,0 +1,50 @@
+h1,h2 {
+    text-align: center;
+    color: #333;
+}
+.HomeLink {
+    text-align: left;
+    margin: 20px 0;
+}
+
+button {
+    display: inline;
+    margin-bottom: auto;
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    border: none;
+}
+
+.NavButtons {
+    margin-left: 30%;
+}
+
+#Vispage {
+    display: inline;
+    margin-bottom: auto;
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: rgb(0, 187, 255);
+    color: black;
+    border: none;
+}
+
+.setActiveButton {
+    border-bottom: 2px solid black;
+}
+
+svg {
+    display: block;
+    margin: auto;
+}
+
+.yearButton {
+    margin-top: 20px;
+}
+
+.yearButton.active {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}

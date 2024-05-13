@@ -1,97 +1,89 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Initialize current slide index
-    let currentSlide = 0;
+// Define the dimensions of the SVG canvas
+var w = 800;
+var h = 400;
 
-    // Show the current slide
-    function showSlide(index) {
-        const slides = document.querySelectorAll(".carousel-item");
-        slides.forEach((slide, i) => {
-            if (i === index) {
-                slide.style.display = "block";
-            } else {
-                slide.style.display = "none";
-            }
-        });
-    }
+// Define padding between bars
+var padding = 1;
 
-        // Call the function to create bar chart visual inside each carousel container
-        createBarChartVisual("#visual1", [25, 4, 27, 8, 11, 30, 15, 20, 13, 1, 6, 19]);
-        createBarChartVisual("#visual2", [30, 20, 10, 40, 50]); // Example data for visual 2
-        createBarChartVisual("#visual3", [20, 40, 50, 30, 10]); // Example data for visual 3
-    // Function to create bar chart visual inside a container
-    function createBarChartVisual(containerId, dataset) {
-        var w = 500;
-        var h = 150;
+// Create x scale
+var xScale = d3.scaleBand()
+    .rangeRound([0, w])
+    .paddingInner(0.05);
 
-        // Define padding between bars
-        var padding = 1;
+// Create y scale
+var yScale = d3.scaleLinear()
+    .range([0, h]);
 
-        // Create x scale
-        var xScale = d3.scaleBand()
-            .domain(d3.range(dataset.length))
-            .rangeRound([0, w])
-            .paddingInner(0.05);
+// Select SVG
+var svg = d3.select("svg");
 
-        // Create y scale
-        var yScale = d3.scaleLinear()
-            .domain([0, d3.max(dataset)])
-            .range([0, h]);
-
-        // Create SVG
-        var svg = d3.select(containerId)
-            .append("svg")
-            .attr("width", w)
-            .attr("height", h);
-
-        // Create rectangles for each data point
-        var bars = svg.selectAll("rect")
-            .data(dataset)
-            .enter()
-            .append("rect")
-            .attr("x", function (d, i) {
-                return xScale(i); // Set the x-coordinate of each bar
-            })
-            .attr("y", function (d) {
-                return h - yScale(d); // Remove the subtraction
-            })
-            .attr("width", xScale.bandwidth() - padding) // Set the width of each bar
-            .attr("height", yScale) // Use the scale directly
-            .style("fill", "gray")
-            // Mouseover event handler
-            .on("mouseover", function (d, i) {
-                d3.select(this)
-                    .style("fill", "orange"); // Change fill color to orange
-
-                // Append text value on hover
-                svg.append("text")
-                    .attr("class", "tooltip")
-                    .attr("x", xScale(i) + xScale.bandwidth() / 2)
-                    .attr("y", h - yScale(d) - 5) // Adjust the y position for better placement
-                    .attr("text-anchor", "middle")
-                    .attr("font-size", "12px")
-                    .attr("fill", "black")
-                    .text(d);
-            })
-            .on("mouseout", function () {
-                d3.select(this)
-                    .style("fill", "gray"); // Change fill color back to gray
-
-                // Remove text value on mouseout
-                svg.select(".tooltip").remove();
+// Function to update chart
+function updateChart(csvFile) {
+    d3.csv(csvFile)
+        .then(function(data) {
+            // Convert 'Value' to a number
+            data.forEach(function(d) {
+                d.Value = +d.Value;
             });
-    }
 
-    // Show initial slide
-    showSlide(currentSlide);
+            // Update x scale domain
+            xScale.domain(d3.range(data.length));
 
-    // Button event listeners
-    document.getElementById("prevBtn").addEventListener("click", function () {
-        currentSlide = (currentSlide - 1 + 3) % 3; // 3 is the number of slides
-        showSlide(currentSlide);
-    });
+            // Update y scale domain
+            yScale.domain([0, d3.max(data, function(d) { return d.Value; })]);
 
-    document.getElementById("nextBtn").addEventListener("click", function () {
-        currentSlide = (currentSlide + 1) % 3; // 3 is the number of slides
-        showSlide(currentSlide);
-    });
-});
+            // Create bars
+            var bars = svg.selectAll("rect")
+                .data(data);
+
+            bars.enter()
+                .append("rect")
+                .merge(bars)
+                .transition()
+                .duration(1000)
+                .attr("x", function(d, i) { return xScale(i); })
+                .attr("y", function(d) { return h - yScale(d.Value); })
+                .attr("width", xScale.bandwidth() - padding)
+                .attr("height", function(d) { return yScale(d.Value); })
+                .style("fill", "gray");
+
+            bars.exit().remove();
+
+            // Add text labels to each bar
+            var textLabels = svg.selectAll("text")
+                .data(data);
+
+            textLabels.enter()
+                .append("text")
+                .merge(textLabels)
+                .text(function(d) { return d.Value; })
+                .attr("x", function(d, i) { return xScale(i) + xScale.bandwidth() / 2; })
+                .attr("y", function(d) { return h - yScale(d.Value) + 15; })
+                .attr("text-anchor", "middle")
+                .attr("font-size", "12px")
+                .attr("fill", "white");
+
+            textLabels.exit().remove();
+        })
+        .catch(function(error) {
+            console.log(error);
+        });
+}
+
+// Function to set active button and update chart
+function setActiveButton(buttonId, csvFile) {
+    // Remove active class from all buttons
+    d3.selectAll(".yearButton").classed("active", false);
+
+    // Add active class to clicked button
+    d3.select("#" + buttonId).classed("active", true);
+
+    // Update the chart with the new CSV file
+    updateChart(csvFile);
+}
+
+// Load the default CSV file
+setActiveButton('year2018', 'Data/LifeExpectancy/LifeExpectancy2018.csv');
+
+// Call updateChart function
+updateChart('Data/LifeExpectancy/LifeExpectancy2018.csv');
