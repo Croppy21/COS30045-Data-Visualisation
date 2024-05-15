@@ -1,6 +1,6 @@
 // Define the dimensions of the SVG canvas
-var w = 800;
-var h = 400;
+var w = 950;
+var h = 200;
 
 // Define padding between bars
 var padding = 1;
@@ -20,52 +20,95 @@ var svg = d3.select("svg");
 // Function to update chart
 function updateChart(csvFile) {
     d3.csv(csvFile)
-        .then(function(data) {
+        .then(function (data) {
             // Convert 'Value' to a number
-            data.forEach(function(d) {
+            data.forEach(function (d) {
                 d.Value = +d.Value;
             });
 
             // Update x scale domain
-            xScale.domain(d3.range(data.length));
+            xScale.domain(data.map(function (d) { return d.Country; })); // Use country names for x axis
+
 
             // Update y scale domain
-            yScale.domain([0, d3.max(data, function(d) { return d.Value; })]);
+            yScale.domain([0, d3.max(data, function (d) { return d.Value; })]);
+
+            // Create x axis
+            var xAxis = d3.axisBottom(xScale);
+
+            // Append x axis to SVG
+            svg.append("g")
+                .attr("transform", "translate(0," + h + ")")
+                .call(xAxis)
+                .selectAll("text")
+                .attr("dx", "-15px")
+                .attr("dy", "6px")
+                .attr("font-size", "11px")
+                .style("text-anchor", "end")
+                .attr("transform", "rotate(-65)");
+
+            // Create y axis
+            var yAxis = d3.axisLeft(yScale);
+
+            // Append y axis to SVG
+            svg.append("g")
+                .call(yAxis);
+
+            // Remove old bars and labels
+            svg.selectAll("rect").remove();
+            svg.selectAll(".barLabel").remove();
+
+            // Create a group for the bars
+            var barGroup = svg.append("g");
 
             // Create bars
-            var bars = svg.selectAll("rect")
+            var bars = barGroup.selectAll("rect")
                 .data(data);
 
-            bars.enter()
-                .append("rect")
-                .merge(bars)
-                .transition()
-                .duration(1000)
-                .attr("x", function(d, i) { return xScale(i); })
-                .attr("y", function(d) { return h - yScale(d.Value); })
+            // Handle the update selection
+            bars
+                .attr("x", function (d) { return xScale(d.Country); })
+                .attr("y", function (d) { return h - yScale(d.Value); })
                 .attr("width", xScale.bandwidth() - padding)
-                .attr("height", function(d) { return yScale(d.Value); })
+                .attr("height", function (d) { return yScale(d.Value); })
                 .style("fill", "gray");
 
-            bars.exit().remove();
+            // Handle the enter selection
+            bars.enter()
+                .append("rect")
+                .attr("x", function (d) { return xScale(d.Country); })
+                .attr("y", function (d) { return h; }) // Start bars at the bottom of the SVG
+                .attr("width", xScale.bandwidth() - padding)
+                .attr("height", 0) // Start with a height of 0
+                .style("fill", "gray")
+                .attr("y", function (d) { return h - yScale(d.Value); })
+                .attr("height", function (d) { return yScale(d.Value); });
 
             // Add text labels to each bar
-            var textLabels = svg.selectAll("text")
+            var textLabels = svg.selectAll(".barLabel")
                 .data(data);
 
+            // Handle the exit selection
+            textLabels.exit().remove();
+
+            // Handle the update selection
+            textLabels
+                .attr("x", function (d) { return xScale(d.Country) + xScale.bandwidth() / 2; })
+                .attr("y", function (d) { return h - yScale(d.Value) + 30; })
+                .text(function (d) { return d.Value; });
+
+            // Handle the enter selection
             textLabels.enter()
                 .append("text")
-                .merge(textLabels)
-                .text(function(d) { return d.Value; })
-                .attr("x", function(d, i) { return xScale(i) + xScale.bandwidth() / 2; })
-                .attr("y", function(d) { return h - yScale(d.Value) + 15; })
+                .attr("class", "barLabel")
+                .attr("x", function (d) { return xScale(d.Country) + xScale.bandwidth() / 2; })
+                .attr("y", function (d) { return h; }) // Start labels at the bottom of the SVG
                 .attr("text-anchor", "middle")
                 .attr("font-size", "12px")
-                .attr("fill", "white");
-
-            textLabels.exit().remove();
+                .text(function (d) { return d.Value; })
+                .attr("y", function (d) { return h - yScale(d.Value) + 15; });
         })
-        .catch(function(error) {
+        .catch(function (error) {
             console.log(error);
         });
 }
