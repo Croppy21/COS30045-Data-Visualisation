@@ -126,7 +126,7 @@ function setActiveButton(buttonId, csvFile) {
 }
 
 // Load the default CSV file
-setActiveButton('year2018', 'Data/LifeExpectancy/LifeExpectancy2018.csv');
+setActiveButton('year2020', 'Data/LifeExpectancy/LifeExpectancy2020.csv');
 
 // Call updateChart function
-updateChart('Data/LifeExpectancy/LifeExpectancy2018.csv');
+updateChart('Data/LifeExpectancy/LifeExpectancy2020.csv');
