@@ -40,14 +40,12 @@ svg {
     margin: auto;
 }
 
-.yearButton {
-    margin-top: 20px;
-}
 
 .yearButton.active {
     background-color: #4CAF50; /* Green */
     color: white;
 }
+
 text {
-    fill: black !important;
+    fill: black;
 }
