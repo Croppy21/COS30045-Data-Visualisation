@@ -63,3 +63,19 @@ text {
     border-radius: 8px;
     pointer-events: none;
 }
+#ChartYears {
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    gap: 10px;               /* Add space between buttons */
+}
+
+.yearButton {
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    background-color: grey;
+    color: white;
+}
+

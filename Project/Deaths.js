@@ -11,8 +11,20 @@ var svg = d3.select("svg")
     .append("g")
     .attr("transform", "translate(" + w / 2 + "," + h / 2 + ")");
 
-// Define the color scale
-var color = d3.scaleOrdinal(d3.schemeSet3);
+var color = d3.scaleOrdinal([
+    "#003057", // Deep Navy Blue (dark, prominent)
+    "#007bff", // Royal Blue (more prominent)
+    "#17a2b8", // Sky Blue (lighter, even more prominent)
+    "#43a047", // Forest Green (shifts hue, remains prominent)
+    "#8bc34a", // Lime Green (lighter, more prominent)
+    "#c0e853", // Light Yellow Green (light, prominent)
+    "#ffc107", // Golden Yellow (lightest, most prominent)
+    "#ff9933", // Light Orange (slightly less prominent)
+    "#fd7e14", // Tangerine Orange (more prominent)
+    "#ff0000", // Fire Engine Red (lighter, prominent again)
+    "#dc3545", // Red (slightly less prominent)
+    "#a020f0"  // Deep Purple (lightest, prominent, contrasting with red)
+]);
 
 // Define the pie generator
 var pie = d3.pie()
@@ -26,9 +38,9 @@ var arc = d3.arc()
 
 // Function to update chart
 function updateChart(csvFile) {
-    d3.csv(csvFile).then(function(data) {
+    d3.csv(csvFile).then(function (data) {
         // Convert value to a number and strip the '%' sign
-        data.forEach(function(d) {
+        data.forEach(function (d) {
             d.value = +d.Percent.replace('%', '');
         });
 
@@ -43,29 +55,25 @@ function updateChart(csvFile) {
         arcEnter.append("path")
             .attr("d", arc)
             .attr("fill", d => color(d.data["Cause of Death"]))
-            .on("mouseover", function(event, d) {
+            .each(function(d) { this._current = d; }) // store the initial angles
+            .on("mouseover", function (event, d) {
                 d3.select(this).transition().duration(200).attr("d", d3.arc().innerRadius(0).outerRadius(radius + 10));
                 tooltip.transition().duration(200).style("opacity", .9);
                 tooltip.html(d.data["Cause of Death"] + "<br/>" + d.data.Percent)
                     .style("left", (event.pageX + 5) + "px")
                     .style("top", (event.pageY - 28) + "px");
             })
-            .on("mouseout", function(d) {
+            .on("mouseout", function (d) {
                 d3.select(this).transition().duration(200).attr("d", arc);
                 tooltip.transition().duration(500).style("opacity", 0);
             });
 
-
         // Update selection for arcs
         arcs.select("path")
-            .attr("d", arc)
-            .attr("fill", d => color(d.data["Cause of Death"]));
+            .transition().duration(1000)
+            .attrTween("d", arcTween); // smooth transition
 
-        arcs.select("text")
-            .attr("transform", d => "translate(" + arc.centroid(d) + ")")
-            .text(d => d.data["Cause of Death"]);
-
-        // Remove exit selection for arcs
+        // Exit selection for arcs
         arcs.exit().remove();
 
         // Define the legend data
@@ -83,20 +91,21 @@ function updateChart(csvFile) {
         legend.selectAll("rect")
             .data(legendData)
             .enter().append("rect")
-            .attr("x", 800)
-            .attr("y", function(d, i) { return i * 20; })
+            .attr("x", 750)
+            .attr("y", function (d, i) { return i * 20; })
             .attr("width", 10)
             .attr("height", 10)
-            .style("fill", function(d) { return d.color; });
+            .style("fill", function (d) { return d.color; });
 
         legend.selectAll("text")
             .data(legendData)
             .enter().append("text")
-            .attr("x", 815)
-            .attr("y", function(d, i) { return i * 20 + 5; })
+            .attr("x", 765)
+            .attr("y", function (d, i) { return i * 20 + 5; })
             .attr("dy", ".35em")
-            .text(function(d) { return d.label; });
-    }).catch(function(error) {
+            .text(function (d) { return d.label; });
+
+    }).catch(function (error) {
         console.log(error);
     });
 }
@@ -117,14 +126,14 @@ function setActiveButton(buttonId, csvFile) {
 setActiveButton('year2021', 'Data/Death/Deaths2021.csv');
 
 // Call updateChart function for initial load
-updateChart('Data/Deaths2021.csv');
+updateChart('Data/Death/Deaths2021.csv');
 
 // Set up button click handlers
-d3.select("#year2021").on("click", function() {
+d3.select("#year2021").on("click", function () {
     setActiveButton('year2021', 'Data/Death/Deaths2021.csv');
 });
 
-d3.select("#year2022").on("click", function() {
+d3.select("#year2022").on("click", function () {
     setActiveButton('year2022', 'Data/Death/Deaths2022.csv');
 });
 
@@ -132,3 +141,12 @@ d3.select("#year2022").on("click", function() {
 var tooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
+
+// Function for smooth transition between arcs
+function arcTween(a) {
+    var i = d3.interpolate(this._current, a);
+    this._current = i(0);
+    return function(t) {
+        return arc(i(t));
+    };
+}

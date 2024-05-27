@@ -70,14 +70,16 @@ function updateChart(data) {
         .attr("stroke", "lightgray")
         .attr("stroke-dasharray", "3,3");
 
-    // Remove old lines and labels
+    // Remove old lines, dots, and labels
     svg.selectAll(".line").remove();
+    svg.selectAll(".dot").remove();
+    svg.selectAll(".hitbox").remove();
     svg.selectAll(".lineLabel").remove();
 
     // Group data by year
     var dataByYear = d3.groups(data, d => d.year);
 
-    // Create the lines
+    // Create the lines and dots
     dataByYear.forEach(function ([year, yearData]) {
         // Append a path for each line
         var path = svg.append("path")
@@ -105,8 +107,27 @@ function updateChart(data) {
                 };
             });
 
-        // Add text labels to each data point
-        svg.selectAll(".lineLabel" + year)
+        // Add dot points to each data point
+        svg.selectAll(".dot" + year)
+            .data(yearData)
+            .enter()
+            .append("circle")
+            .attr("class", "dot dot" + year)
+            .attr("cx", function (d) { return xScale(d.month) + xScale.bandwidth() / 2; })
+            .attr("cy", function (d) { return yScale(d.amount); })
+            .attr("r", 4)
+            .attr("fill", function () {
+                if (year === '2020') return 'steelblue';
+                if (year === '2021') return 'green';
+                return 'red';
+            })
+            .style("opacity", 0) // Initially set opacity to 0
+            .transition() // Apply transition
+            .duration(3000) // Duration of transition
+            .style("opacity", 1); // Fade in
+
+        // Add text labels to each data point and show them on hover
+        var labels = svg.selectAll(".lineLabel" + year)
             .data(yearData)
             .enter()
             .append("text")
@@ -116,10 +137,28 @@ function updateChart(data) {
             .attr("text-anchor", "middle")
             .attr("font-size", "12px")
             .text(function (d) { return d.amount; })
-            .style("opacity", 0) // Initially set opacity to 0
-            .transition() // Apply transition
-            .duration(3000) // Duration of transition
-            .style("opacity", 1); // Fade in
+            .style("opacity", 0); // Initially set opacity to 0
+
+        // Add invisible circles for larger hitbox
+        svg.selectAll(".hitbox" + year)
+            .data(yearData)
+            .enter()
+            .append("circle")
+            .attr("class", "hitbox hitbox" + year)
+            .attr("cx", function (d) { return xScale(d.month) + xScale.bandwidth() / 2; })
+            .attr("cy", function (d) { return yScale(d.amount); })
+            .attr("r", 15) // Larger radius for hitbox
+            .attr("fill", "transparent") // Invisible hitbox
+            .on("mouseover", function(event, d) {
+                d3.selectAll(".lineLabel" + year)
+                    .filter(label => label === d)
+                    .style("opacity", 1); // Show label on hover
+            })
+            .on("mouseout", function(event, d) {
+                d3.selectAll(".lineLabel" + year)
+                    .filter(label => label === d)
+                    .style("opacity", 0); // Hide label on mouse out
+            });
     });
 
     // Define the legend data
@@ -153,7 +192,6 @@ function updateChart(data) {
         .text(function (d) { return d.year; });
 }
 
-
 // Load the CSV file and initialize chart
 d3.csv('Data/Covid/CovidAllYears.csv').then(function (data) {
     // Convert 'amount' to a number
@@ -181,8 +219,10 @@ d3.csv('Data/Covid/CovidAllYears.csv').then(function (data) {
 function toggleVisibility(year) {
     var isVisible = d3.selectAll(".line" + year).style("display") !== "none";
 
-    // Toggle visibility of lines and labels
+    // Toggle visibility of lines, dots, and labels
     d3.selectAll(".line" + year).style("display", isVisible ? "none" : "inline");
+    d3.selectAll(".dot" + year).style("display", isVisible ? "none" : "inline");
+    d3.selectAll(".hitbox" + year).style("display", isVisible ? "none" : "inline");
     d3.selectAll(".lineLabel" + year).style("display", isVisible ? "none" : "inline");
 
     // Toggle button color
@@ -191,4 +231,3 @@ function toggleVisibility(year) {
         .style("color", "white")
         .classed("active", !isVisible);
 }
-
