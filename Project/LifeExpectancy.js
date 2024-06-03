@@ -1,23 +1,33 @@
 // Define the dimensions of the SVG canvas
-var w = 950;
-var h = 300;
+var w = 960;
+var h = 400; // Increase height to provide more space for labels and axis
+
+// Define margins to provide space for axes and labels
+var margin = { top: 40, right: 20, bottom: 100, left: 60 }; // Adjust left margin for y-axis labels
+var width = w - margin.left - margin.right;
+var height = h - margin.top - margin.bottom;
 
 // Define padding between bars
 var padding = 5; // Adjust as needed for spacing between bars
 
 // Create x scale
 var xScale = d3.scaleBand()
-    .rangeRound([0, w])
+    .rangeRound([0, width])
     .paddingInner(0.2) // Adjust the padding between bars
     .paddingOuter(0.2); // Adjust the padding at the ends
 
 // Create y scale
 var yScale = d3.scaleLinear()
-    .range([0, h]);
+    .range([height, 0]); // Invert the range for y-axis
 
-// Select SVG
-var svg = d3.select("svg");
+// Select SVG and append a group element
+var svg = d3.select("svg")
+    .attr("width", w)
+    .attr("height", h)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// Function to update chart
 // Function to update chart
 function updateChart(csvFile) {
     d3.csv(csvFile)
@@ -31,7 +41,12 @@ function updateChart(csvFile) {
             xScale.domain(data.map(function (d) { return d.Country; })); // Use country names for x axis
 
             // Update y scale domain
-            yScale.domain([0, d3.max(data, function (d) { return d.Value; })]);
+            var maxValue = d3.max(data, function (d) { return d.Value; });
+            var minValue = d3.min(data, function (d) { return d.Value; });
+            yScale.domain([0, 90]); // Set domain to max value + buffer
+
+            // Define the color for bars
+            var barColor = "steelblue";
 
             // Create x axis
             var xAxis = d3.axisBottom(xScale);
@@ -40,7 +55,7 @@ function updateChart(csvFile) {
             svg.selectAll(".x-axis").remove(); // Remove previous axis
             svg.append("g")
                 .attr("class", "x-axis")
-                .attr("transform", "translate(0," + h + ")")
+                .attr("transform", "translate(0," + height + ")")
                 .call(xAxis)
                 .selectAll("text")
                 .attr("dx", "-15px")
@@ -51,8 +66,7 @@ function updateChart(csvFile) {
 
             // Create y axis
             var yAxis = d3.axisLeft(yScale)
-                .tickValues([0, 20, 40, 60, 80, 100]); // Set custom tick values
-
+                .tickValues(d3.range(0, 100, 10)); // Set custom tick values dynamically
 
             // Append y axis to SVG
             svg.selectAll(".y-axis").remove(); // Remove previous axis
@@ -60,69 +74,113 @@ function updateChart(csvFile) {
                 .attr("class", "y-axis")
                 .call(yAxis);
 
-            // Remove old bars and labels
-            svg.selectAll("rect").remove();
-            svg.selectAll(".barLabel").remove();
+            // Add y axis line
+            svg.selectAll(".y-axis-line").remove();
+            svg.append("line")
+                .attr("class", "y-axis-line")
+                .attr("x1", 0)
+                .attr("y1", 0)
+                .attr("x2", 0)
+                .attr("y2", height)
+                .style("stroke", "black");
 
-            // Create a group for the bars
-            var barGroup = svg.append("g");
-
-            // Create bars
-            var bars = barGroup.selectAll("rect")
+            // Update bars
+            var bars = svg.selectAll("rect")
                 .data(data);
-
-            // Handle the update selection
-            bars
-                .attr("x", function (d) { return xScale(d.Country); })
-                .attr("y", function (d) { return h - yScale(d.Value); })
-                .attr("width", xScale.bandwidth())
-                .attr("height", function (d) { return yScale(d.Value); })
-                .style("fill", "gray");
 
             // Handle the enter selection
             bars.enter()
                 .append("rect")
                 .attr("x", function (d) { return xScale(d.Country); })
-                .attr("y", function (d) { return h; }) // Start bars at the bottom of the SVG
+                .attr("y", function (d) { return yScale(d.Value); }) // Start at y=value
                 .attr("width", xScale.bandwidth())
-                .attr("height", 0) // Start with a height of 0
-                .style("fill", "gray")
+                .attr("height", function (d) { return height - yScale(d.Value); }) // Set height based on value
+                .style("fill", function (d) { return d.Value === 0 ? "none" : barColor; }) // Hide bars with zero value
                 .on("mouseover", function (event, d) {
-                    d3.select(this).style("fill", "orange"); // Change color on hover
-                    barGroup.append("text")
-                        .attr("class", "barLabel")
-                        .attr("id", "barText") // Assign id to text element
-                        .attr("x", xScale(d.Country) + xScale.bandwidth() / 2)
-                        .attr("y", h - yScale(d.Value))
+                    var barWidth = xScale.bandwidth();
+                    var textPadding = 1; // Padding between text and tooltip border
+                    var textWidth = getTextWidth(d.Country + ": " + d.Value, "12px Arial"); // Calculate text width
+                    var tooltipWidth = textWidth + 2 * textPadding; // Adjust tooltip width based on text width
+                    var tooltipHeight = 30; // Adjust tooltip height
+                    var tooltipX = xScale(d.Country) + barWidth / 2 - tooltipWidth / 2;
+                    var tooltipY = yScale(d.Value) - tooltipHeight - 5;
+
+                    svg.append("rect")
+                        .attr("class", "tooltip-bg")
+                        .attr("x", tooltipX)
+                        .attr("y", tooltipY + 65)
+                        .attr("width", tooltipWidth)
+                        .attr("height", tooltipHeight)
+                        .attr("fill", "orange")
+                        .attr("rx", 5)
+                        .attr("ry", 5);
+
+                    svg.append("text")
+                        .attr("class", "tooltip-text")
+                        .attr("x", tooltipX + tooltipWidth / 2)
+                        .attr("y", tooltipY + tooltipHeight / 2 + 65)
                         .attr("text-anchor", "middle")
-                        .attr("font-size", "12px")
+                        .attr("alignment-baseline", "middle")
                         .attr("fill", "black")
-                        .text(d.Value);
-                    // Check if #barText is being selected properly
-                    console.log(d3.select("#barText").style("fill"));
-                    // Apply styles to #barText
-                    d3.select("#barText")
-                        .style("fill", "blue")
-                        .style("font-weight", "bold")
-                        .style("background-color", "red");
+                        .attr("font-size", "12px")
+                        .text(d.Country + ": " + d.Value);
+
                 })
                 .on("mouseout", function () {
-                    d3.select(this).style("fill", "gray"); // Revert color on mouseout
-                    svg.selectAll(".barLabel").remove();
+                    svg.selectAll(".tooltip-bg").remove();
+                    svg.selectAll(".tooltip-text").remove();
                 })
+                .merge(bars) // Merge enter and update selections
                 .transition() // Add transition for the bars
                 .duration(1000)
-                .attr("y", function (d) { return h - yScale(d.Value); })
-                .attr("height", function (d) { return yScale(d.Value); });
-        })
+                .attr("x", function (d) { return xScale(d.Country); })
+                .attr("y", function (d) { return yScale(d.Value); })
+                .attr("width", xScale.bandwidth())
+                .attr("height", function (d) { return height - yScale(d.Value); });
 
-        .catch(function (error) {
-            console.log(error);
+            // Append warning text for zero value bars
+            svg.selectAll(".warning-text").remove(); // Remove previous warning texts
+            svg.selectAll(".warning-text")
+                .data(data.filter(function (d) { return d.Value === 0; })) // Filter data for zero values
+                .enter()
+                .append("text")
+                .attr("class", "warning-text")
+                .attr("x", function (d) { return xScale(d.Country) + xScale.bandwidth() / 2; })
+                .attr("y", function (d) { return yScale(0) - 10; }) // Position above the bar
+                .attr("text-anchor", "middle")
+                .attr("alignment-baseline", "middle")
+                .style("fill", "red") // Change the text color to red
+                .style("font-weight", "bold") // Make the text bold
+                .attr("font-size", "18px")
+                .text("\u26A0")
+                .style("opacity", 0) // Set initial opacity to 0 for fade-in effect
+                .transition() // Apply transition for fade-in effect
+                .duration(1000) // Set duration for fade-in transition
+                .style("opacity", 1); // Set opacity to 1
+
+            // Remove warning text with fade-out transition
+            svg.selectAll(".warning-text")
+                .data(data.filter(function (d) { return d.Value === 0; })) // Filter data for zero values
+                .exit()
+                .transition() // Apply transition for fade-out effect
+                .duration(1000) // Set duration for fade-out transition
+                .style("opacity", 0) // Set opacity to 0 for fade-out effect
+                .remove(); // Remove the warning text element after transition
+
+            // Remove exit selection
+            bars.exit().remove();
+
         });
 }
 
-
-
+// Function to calculate text width
+function getTextWidth(text, font) {
+    var canvas = document.createElement("canvas");
+    var context = canvas.getContext("2d");
+    context.font = font;
+    var metrics = context.measureText(text);
+    return metrics.width;
+}
 
 // Function to set active button and update chart
 function setActiveButton(buttonId, csvFile) {
