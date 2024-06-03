@@ -137,7 +137,6 @@ function updateChart(csvFile) {
                 .attr("y", function (d) { return yScale(d.Value); })
                 .attr("width", xScale.bandwidth())
                 .attr("height", function (d) { return height - yScale(d.Value); });
-
             // Append warning text for zero value bars
             svg.selectAll(".warning-text").remove(); // Remove previous warning texts
             svg.selectAll(".warning-text")
@@ -154,6 +153,36 @@ function updateChart(csvFile) {
                 .attr("font-size", "18px")
                 .text("\u26A0")
                 .style("opacity", 0) // Set initial opacity to 0 for fade-in effect
+                .on("mouseover", function (event, d) {
+                    var tooltipX = xScale(d.Country) + xScale.bandwidth() / 2;
+                    var tooltipY = yScale(0) - 30; // Adjust the position of the tooltip
+                    var tooltipWidth = 100; // Adjust tooltip width
+                    var tooltipHeight = 20; // Adjust tooltip height
+
+                    svg.append("rect")
+                        .attr("class", "tooltip-bg")
+                        .attr("x", tooltipX - tooltipWidth / 2)
+                        .attr("y", tooltipY - tooltipHeight - 5)
+                        .attr("width", tooltipWidth)
+                        .attr("height", tooltipHeight)
+                        .attr("fill", "red") // light red
+                        .attr("rx", 5)
+                        .attr("ry", 5);
+
+                    svg.append("text")
+                        .attr("class", "tooltip-text")
+                        .attr("x", tooltipX)
+                        .attr("y", tooltipY - 12)
+                        .attr("text-anchor", "middle")
+                        .attr("alignment-baseline", "middle")
+                        .attr("fill", "black")
+                        .attr("font-size", "12px")
+                        .text("No Data Found");
+                })
+                .on("mouseout", function () {
+                    svg.selectAll(".tooltip-bg").remove();
+                    svg.selectAll(".tooltip-text").remove();
+                })
                 .transition() // Apply transition for fade-in effect
                 .duration(1000) // Set duration for fade-in transition
                 .style("opacity", 1); // Set opacity to 1
@@ -166,6 +195,7 @@ function updateChart(csvFile) {
                 .duration(1000) // Set duration for fade-out transition
                 .style("opacity", 0) // Set opacity to 0 for fade-out effect
                 .remove(); // Remove the warning text element after transition
+
 
             // Remove exit selection
             bars.exit().remove();
