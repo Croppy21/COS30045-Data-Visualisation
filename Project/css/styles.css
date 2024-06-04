@@ -29,7 +29,7 @@ button {
     margin-left: 10px;
     padding: 10px 20px;
     background-color: rgb(0, 187, 255);
-    color: black;
+    color: rgb(255, 255, 255);
     border: none;
 }
 
@@ -43,12 +43,12 @@ svg {
 }
 
 .yearButton.active {
-    background-color: #4CAF50; /* Green */
+    background-color: #194921; /* Green */
     color: white;
 }
 
 text {
-    fill: black;
+    fill: rgb(0, 0, 0);
 }
 
 .tooltip {
@@ -79,3 +79,16 @@ text {
     color: white;
 }
 
+.gragh{
+    padding-top: 5%;
+}
+.charts-text{
+    text-align: center;
+    font-family: "Krona One", sans-serif;
+}
+
+.description{
+    padding-left: 5%;
+    padding-right: 5%;
+    font-family: "Krona One", sans-serif;
+}

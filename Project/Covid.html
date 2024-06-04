@@ -9,32 +9,75 @@
     <meta name="author" content="Mack Cropman">
     <title>Life Expectancy</title>
     <!-- Include D3.js library -->
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/notHomepage.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <a href="index.html">
-        <h1 class="HomeLink"> Emerging vs. Established Causes of Death</h1>
-    </a><br>
-    <div class="NavButtons">
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="Homepage.html">MT</a>
+          <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+    <!--side bar-->
+          <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+            <div class="offcanvas-header">
+              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Data</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                <li class="nav-item">
+                    <a class="nav-link active" href="Covid.html"> 01 Deaths Due to COVID-19 by Year and Month of Occurrence </a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link " aria-current="page" href="Deaths.html"> 02 Established Causes of Death </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="LifeExpectancy.html"> 03 Life Expectancy by Countries</a>
+                  </li>
+            </div>
+          </div>
+        </div>
+    </nav>
+
+    <!-- <div class="NavButtons">
         <button type="button" onclick="location.href='Deaths.html'">Established Causes Of Death</button>
         <button class="setActiveButton" type="button" onclick="location.href='Covid.html'">Covid Cases by Month</button>
         <button type="button" onclick="location.href='LifeExpectancy.html'">Life
             Expectancy</button>
+    </div> -->
+    <div class="gragh">
+        <div class="charts-text">
+            <p> Covid Cases by Months<p>
+        </div>
+        <div id="ChartYears">
+            <button id="year2020" class="yearButton active" type="button"
+                onclick="setActiveButton('year2020', 'Data/Covid/Covid2020.csv')">2020</button>
+            <button id="year2021" class="yearButton active" type="button"
+                onclick="setActiveButton('year2021', 'Data/Covid/Covid2021.csv')">2021</button>
+            <button id="year2022" class="yearButton active" type="button"
+                onclick="setActiveButton('year2022', 'Data/Covid/Covid2022.csv')">2022</button>
+        </div><br>
     </div>
-    <h2>Covid Cases by Month</h2>
-    <div id="ChartYears">
-        <button id="year2020" class="yearButton active" type="button"
-            onclick="setActiveButton('year2020', 'Data/Covid/Covid2020.csv')">2020</button>
-        <button id="year2021" class="yearButton active" type="button"
-            onclick="setActiveButton('year2021', 'Data/Covid/Covid2021.csv')">2021</button>
-        <button id="year2022" class="yearButton active" type="button"
-            onclick="setActiveButton('year2022', 'Data/Covid/Covid2022.csv')">2022</button>
-    </div><br>
+ 
     <svg width="980" height="400"></svg><br>
-    <p>This here will be info about the Visual</p><br><br>
+    <div class= "description">
+        <p>OECD Mortality Section:  The OECD website's mortality section offers dedicated data resources
+        related to death causes in member countries. This data will be complementary to the information
+        obtained from IHME and WHO.</p><br><br>
+    </div>
     <script src="Covid.js"></script>
+    <footer>
+        <div class="footer">
+            <p>@ 2024 MT | PRIVACY POLICY | TERMS AND CONDITION</p>
+        </div>
+    </footer>
 </body>
 
 </html>
