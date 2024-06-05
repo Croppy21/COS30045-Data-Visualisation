@@ -7,20 +7,138 @@
     <meta name="description" content="Data Visualisation">
     <meta name="keywords" content="HTML, CSS, D3">
     <meta name="author" content="Mack Cropman">
-    <title>Homepage</title>
+    <title>Life Expectancy</title>
     <!-- Include D3.js library -->
+    <script src="js/bootstrap.bundle.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="script.js"></script>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="css/homepage.css">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-    <a href="index.html">
-        <h1> Emerging vs. Established Causes of Death</h1>
-    </a><br>
-    <p>This here will be info about the project</p><br><br>
-    <button id="Vispage" type="button" onclick="location.href='Deaths.html'">Click here the to view the
-        visualisations</button>
+    <!--Nav bar -->
+    <nav class="navbar fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="index.html">MT</a>
+            <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+                aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!--side bar-->
+            <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                        <li class="nav-item">
+                            <a class="nav-link" href="Covid.html"> 01 Deaths Due to COVID-19 by Year and Month of
+                                Occurrence </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " aria-current="page" href="Deaths.html"> 02 Established Causes of Death
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="LifeExpectancy.html"> 03 Life Expectancy by Countries</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <!--content-->
+    <div class="image-container">
+        <img src="covid.png" class="img-fluid" alt="covid death">
+        <p>Public Health in the Context of COVID-19.</p>
+        <a class="icon-link icon-link-hover" href="Covid.html">
+            <div id="seeMore">See more-&gt;</div>
+
+            <svg class="bi" aria-hidden="true">
+                <use xlink:href="#arrow-right"></use>
+            </svg>
+        </a>
+    </div>
+    <div class="both">
+        <div class="overview">
+            <div>
+                <p>Public Health in the Context of COVID-19.</p>
+            </div>
+            <p>
+                The global COVID-19 pandemic has cast a spotlight on the importance of public health.
+                To understand the pandemic's impact, it's crucial to examine it in the context of existing health
+                trends.
+                This analysis will delve into three key data points: established causes of death, life expectancy by
+                country,
+                and deaths due to COVID-19 by year and month. By looking at how these factors interact, we can gain
+                valuable
+                insights into how the pandemic has influenced global health and identify areas where public health
+                efforts
+                might need to be adjusted. For instance, comparing established causes of death to COVID-19 mortality
+                rates
+                can reveal if the pandemic has become a leading cause of death. Similarly, analyzing how life expectancy
+                has
+                changed in different countries throughout the pandemic can shed light on its overall health impact.
+                By bringing these data points together, we can build a more comprehensive picture of public health in
+                the
+                face of COVID-19.
+            </p>
+        </div>
+    </div>
+    <!--graghs and their description-->
+    <div class="whole">
+        <div class="halfdivide">
+            <div>
+                <img src="pir.png" class="img-fluid" alt="..." href="">
+            </div>
+            <div class="halfdividemore">
+                <p>analyzing how life expectancy has
+                    changed in different countries throughout the pandemic can shed light on its overall health impact.
+                    By bringing these data points together, we can build a more comprehensive picture of public health
+                    in the
+                    face of COVID-19.
+                </p><br>
+                <a href="Covid.html" class="text-decoration-none">COVID-19 -&gt;</a>
+            </div>
+        </div>
+        <div class="halfdivide">
+            <div class="halfdividemore2">
+                <p>analyzing how life expectancy has
+                    changed in different countries throughout the pandemic can shed light on its overall health impact.
+                    By bringing these data points together, we can build a more comprehensive picture of public health
+                    in the
+                    face of COVID-19.
+                </p><br>
+                <a href="Deaths.html" class="text-decoration-none">Deaths -&gt;</a>
+            </div>
+            <div>
+                <img src="line.png" class="img-fluid" alt="..." href="">
+            </div>
+        </div>
+        <div class="halfdivide">
+            <div>
+                <img src="bar.png" class="img-fluid" alt="..." href="">
+            </div>
+            <div class="halfdividemore">
+                <p>analyzing how life expectancy has
+                    changed in different countries throughout the pandemic can shed light on its overall health impact.
+                    By bringing these data points together, we can build a more comprehensive picture of public health
+                    in the
+                    face of COVID-19.
+                </p><br>
+                <a href="LifeExpectancy.html" class="text-decoration-none">Life Expectancy -&gt;</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer">
+            <p>@ 2024 MT | PRIVACY POLICY | TERMS AND CONDITION</p>
+        </div>
+    </footer>
 </body>
 
 </html>
