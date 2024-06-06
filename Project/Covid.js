@@ -1,5 +1,5 @@
 // Define the dimensions of the SVG canvas
-var w = 950;
+var w = 960;
 var h = 500; // Increased height for better visualization
 
 // Define margins
@@ -190,6 +190,21 @@ function updateChart(data) {
         .attr("y", function (d, i) { return i * 20 + 9; })
         .attr("dy", ".35em")
         .text(function (d) { return d.year; });
+
+    // Add x-axis label
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 30)
+        .text("Months");
+
+    // Add y-axis label
+    svg.append("text")
+        .attr("text-anchor", "end")
+        .attr("transform", "rotate(-90)")
+        .attr("x", (-height / 2) + 60)
+        .attr("y", -margin.left + 11)
+        .text("Covid Cases");
 }
 
 // Load the CSV file and initialize chart
@@ -221,7 +236,7 @@ function downloadCSV() {
     var csvFilePath = "Data/Covid/CovidCases.csv";
     var link = document.createElement("a");
     link.href = csvFilePath;
-    link.download = "CovicCases.csv";
+    link.download = "CovidCases.csv";
     link.click();
 }
 
@@ -230,7 +245,7 @@ function downloadXLSX() {
     var xlsxFilePath = "Data/Covid/CovidCases.xlsx";
     var link = document.createElement("a");
     link.href = xlsxFilePath;
-    link.download = "CovicCases.xlsx";
+    link.download = "CovidCases.xlsx";
     link.click();
 }
 

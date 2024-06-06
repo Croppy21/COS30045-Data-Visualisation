@@ -204,10 +204,31 @@ function updateChart(csvFile) {
                 .style("opacity", 0) // Set opacity to 0 for fade-out effect
                 .remove(); // Remove the warning text element after transition
 
-
             // Remove exit selection
             bars.exit().remove();
         });
+
+    // Append labels for the axes
+    svg.selectAll(".axis-label").remove(); // Remove previous labels
+
+    // Add x-axis label
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("x", width / 2)
+        .attr("y", height + margin.bottom - 10)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Countries");
+
+    // Add y-axis label
+    svg.append("text")
+        .attr("class", "axis-label")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -height / 2)
+        .attr("y", -margin.left + 20)
+        .attr("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Life Exectancy at Birth (Years)");
 }
 
 // Function to calculate text width
@@ -268,7 +289,6 @@ function toggleDownloadOptions() {
         arrowIcon.innerHTML = "&#128898;"; // Change arrow to right arrow
     }
 }
-
 
 // Attach event listener to download heading
 document.getElementById("download-heading").addEventListener("click", toggleDownloadOptions);
