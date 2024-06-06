@@ -1,7 +1,7 @@
 
 
 .image-container{
-    color: #22391A;
+    color: #384152;
     font-family: "Krona One", sans-serif;
     font-weight: 400;
     font-style: normal;
@@ -9,7 +9,7 @@
 }
 
 nav .navbar-brand{
-    color:  #22391A;
+    color:  #384152;
     font-family: "Krona One", sans-serif;
     font-weight: 600;
     font-size: 30px;
@@ -37,7 +37,7 @@ nav .navbar-brand{
     top: 15%;
     left: 5%;
     right: 30%; 
-    color: #22391A; /* Example text color */
+    color: #384152; /* Example text color */
     background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
     padding: 10px;
     font-size: 70px;
@@ -60,7 +60,7 @@ nav .navbar-brand{
     padding-top: 5%;
     padding-bottom: 2%;
     text-align: center;
-    background-color: #22391A; 
+    background-color: #384152;
     font-family: "Krona One", sans-serif;
     color:white; 
 }

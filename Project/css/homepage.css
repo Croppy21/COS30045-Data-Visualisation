@@ -55,22 +55,101 @@ nav .navbar-brand{
   }
 
 .overview{
-    padding-top: 2%;
+    padding-top: 10px;
     padding-bottom: 2%;
     padding-left: 2%;
     padding-right: 2%;
-    background-color: #22391A;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: #5B687F;
     font-family: "Krona One", sans-serif;
     color:white;
 }
 .overview div{
+
     padding-left: 30%;
     padding-right: 10%;
-    background-color: #22391A;
+    background-color: #5B687F;
+    font-family: "Krona One", sans-serif;
+    color:white;
+
+}
+
+.overview2{
+
+    padding-top: 10px;
+    padding-bottom: 2%;
+    padding-left: 2%;
+    padding-right: 2%;
+    margin-right: 20px;
+    margin-left: 20px;
+    background-color: #5B687F;
     font-family: "Krona One", sans-serif;
     color:white;
 }
-/* image and text */
+.ove2heading{
+    padding-left: 40%;
+    font-size: 25px;
+
+}
+.styled-line {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: 2%;
+    margin-right: 5%;
+    height: 5px; /* Set the height of the line */
+    background-color: #5B687F; /* Set the background color of the line */
+    width: 95%; /* Set the width of the line */
+}
+
+
+
+.text {
+    padding-top: 2%;
+    padding-bottom: 5%;
+    text-align: center ;
+    font-family: "Krona One", sans-serif;
+    color:white;
+}
+
+.text2 {
+    padding-left: 2%;
+    padding-right: 2%;
+    padding-top: 2%;
+    padding-bottom: 5%;
+    font-family: "Krona One", sans-serif;
+    color:white;
+}
+
+
+.text2 div {
+    text-align: center ;
+    font-family: "Krona One", sans-serif;
+    color:white;
+}
+
+/* image and text*/
+.card-link {
+    text-decoration: none; /* Remove underline from link */
+    color: inherit; /* Inherit text color */
+  }
+  
+.card{
+    
+    transition: all 0.3s;
+}
+.big-container{
+    background-color: #384152;
+    padding-top: 20px;
+}
+.card:hover{
+    transform: scale(1.15);
+}
+
+
+
+
+/*
 .halfdivide{
     display: flex;
     font-family: "Krona One", sans-serif;
@@ -97,12 +176,15 @@ nav .navbar-brand{
     background-color: #22391A;
     color:white;
 }
+ */
+
+
 
 .footer{
     padding-top: 5%;
     padding-bottom: 2%;
     text-align: center;
-    background-color: #22391A;
+    background-color: #384152;
     font-family: "Krona One", sans-serif;
     color:white;
 }
