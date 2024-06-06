@@ -27,7 +27,10 @@ var svg = d3.select("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// Function to update chart
+// Variable to store current data
+var currentData = {};
+var currentYear = "2020";
+
 // Function to update chart
 function updateChart(csvFile) {
     d3.csv(csvFile)
@@ -36,6 +39,9 @@ function updateChart(csvFile) {
             data.forEach(function (d) {
                 d.Value = +d.Value;
             });
+
+            // Store the current data for download
+            currentData[currentYear] = data;
 
             // Update x scale domain
             xScale.domain(data.map(function (d) { return d.Country; })); // Use country names for x axis
@@ -98,17 +104,19 @@ function updateChart(csvFile) {
                 .style("fill", function (d) { return d.Value === 0 ? "none" : barColor; }) // Hide bars with zero value
                 .on("mouseover", function (event, d) {
                     var barWidth = xScale.bandwidth();
-                    var textPadding = 1; // Padding between text and tooltip border
-                    var textWidth = getTextWidth(d.Country + ": " + d.Value, "12px Arial"); // Calculate text width
-                    var tooltipWidth = textWidth + 2 * textPadding; // Adjust tooltip width based on text width
-                    var tooltipHeight = 30; // Adjust tooltip height
-                    var tooltipX = xScale(d.Country) + barWidth / 2 - tooltipWidth / 2;
-                    var tooltipY = yScale(d.Value) - tooltipHeight - 5;
+                    var textPadding = 5;
+                    var tooltipX = parseFloat(d3.select(this).attr("x")) + barWidth / 2;
+                    var tooltipY = parseFloat(d3.select(this).attr("y")) - 10;
+
+                    var textWidth = getTextWidth(d.Country + ": " + d.Value, "12px sans-serif");
+
+                    var tooltipWidth = textWidth + 2 * textPadding;
+                    var tooltipHeight = 20;
 
                     svg.append("rect")
                         .attr("class", "tooltip-bg")
-                        .attr("x", tooltipX)
-                        .attr("y", tooltipY + 65)
+                        .attr("x", tooltipX - tooltipWidth / 2)
+                        .attr("y", tooltipY - tooltipHeight)
                         .attr("width", tooltipWidth)
                         .attr("height", tooltipHeight)
                         .attr("fill", "orange")
@@ -117,14 +125,13 @@ function updateChart(csvFile) {
 
                     svg.append("text")
                         .attr("class", "tooltip-text")
-                        .attr("x", tooltipX + tooltipWidth / 2)
-                        .attr("y", tooltipY + tooltipHeight / 2 + 65)
+                        .attr("x", tooltipX)
+                        .attr("y", tooltipY - 10)
                         .attr("text-anchor", "middle")
                         .attr("alignment-baseline", "middle")
                         .attr("fill", "black")
                         .attr("font-size", "12px")
                         .text(d.Country + ": " + d.Value);
-
                 })
                 .on("mouseout", function () {
                     svg.selectAll(".tooltip-bg").remove();
@@ -137,6 +144,7 @@ function updateChart(csvFile) {
                 .attr("y", function (d) { return yScale(d.Value); })
                 .attr("width", xScale.bandwidth())
                 .attr("height", function (d) { return height - yScale(d.Value); });
+
             // Append warning text for zero value bars
             svg.selectAll(".warning-text").remove(); // Remove previous warning texts
             svg.selectAll(".warning-text")
@@ -199,7 +207,6 @@ function updateChart(csvFile) {
 
             // Remove exit selection
             bars.exit().remove();
-
         });
 }
 
@@ -220,9 +227,51 @@ function setActiveButton(buttonId, csvFile) {
     // Add active class to clicked button
     d3.select("#" + buttonId).classed("active", true);
 
+    // Update the current year based on button ID
+    currentYear = buttonId.replace('year', '');
+
     // Update the chart with the new CSV file
     updateChart(csvFile);
 }
+
+// Function to download CSV file
+function downloadCSV() {
+    var csvFilePath = "Data/LifeExpectancy/LifeExpectancyRawData.csv";
+    var link = document.createElement("a");
+    link.href = csvFilePath;
+    link.download = "LifeExpectancyRawData.csv";
+    link.click();
+}
+
+// Function to download XLSX file
+function downloadXLSX() {
+    var xlsxFilePath = "Data/LifeExpectancy/LifeExpectancyRawData.xlsx";
+    var link = document.createElement("a");
+    link.href = xlsxFilePath;
+    link.download = "LifeExpectancyRawData.xlsx";
+    link.click();
+}
+
+// Attach event listeners to download buttons
+document.getElementById("download-csv-button").addEventListener("click", downloadCSV);
+document.getElementById("download-xlsx-button").addEventListener("click", downloadXLSX);
+
+// Function to toggle download options and arrow icon
+function toggleDownloadOptions() {
+    var downloadOptions = document.getElementById("download-options");
+    var arrowIcon = document.getElementById("arrow-icon");
+    if (downloadOptions.style.display === "none") {
+        downloadOptions.style.display = "block";
+        arrowIcon.innerHTML = "&#9660;"; // Change arrow to down arrow
+    } else {
+        downloadOptions.style.display = "none";
+        arrowIcon.innerHTML = "&#128898;"; // Change arrow to right arrow
+    }
+}
+
+
+// Attach event listener to download heading
+document.getElementById("download-heading").addEventListener("click", toggleDownloadOptions);
 
 // Load the default CSV file
 setActiveButton('year2020', 'Data/LifeExpectancy/LifeExpectancy2020.csv');

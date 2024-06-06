@@ -1,0 +1,15 @@
+"Deaths due to COVID-19 by year and month of occurrence"
+"Year of death","Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Total"
+"2020","0","0","23","79","12","3","145","473","146","16","8","1","906"
+"2021","2","1","1","2","0","0","13","98","316","443","260","219","1355"
+"2022","1646","1034","425","716","929","889","1408","1129","447","254","456","968","10301"
+"2023","753","232","268","433","633","598","335","161","153","202","395","362","4525"
+"2024","189","na","na","na","na","na","na","na","na","na","na","na","189"
+
+"a. Includes COVID-19 death registrations only. Numbers will differ to disease surveillance systems."
+"b. Includes all COVID-19 deaths (both doctor and coroner certified) that occurred and were registered by 31 January 2024."
+"c. All deaths due to COVID-19 in this report have been coded to ICD-10 code U07.1 COVID-19, virus identified; U07.2 COVID-19, virus not identified as the underlying cause of death; or U10.9 Multisystem inflammatory syndrome associated with COVID-19."
+"d. Data is provisional and subject to change."
+"e. Refer to the methodology for more information regarding the data in this table."
+
+"Source: Australian Bureau of Statistics, COVID-19 Mortality in Australia: Deaths registered until 31 January 2024 27/02/2024"a

@@ -18,7 +18,7 @@ nav .navbar-brand{
 
 @media (max-width: 991px){
     .sidebar{
-        background-color: rgba(255, 255, 255, 0.15); 
+        background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
     }
 }
@@ -26,28 +26,28 @@ nav .navbar-brand{
 .image-container {
     position: relative; /* Needed for absolute positioning of child */
   }
-  
+
   .image-container img {
     width: 100%; /* Optional: Adjust image width if needed */
     display: block;
   }
-  
+
   .image-container p {
     position: absolute;
     top: 15%;
     left: 5%;
-    right: 30%; 
+    right: 30%;
     color: #22391A; /* Example text color */
     background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
     padding: 10px;
     font-size: 70px;
   }
-  
+
   .image-container a {
     position: absolute;
     top: 55%;
     left: 70%;
-    right: 10%; 
+    right: 10%;
     color: #ffe203;
     background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
     padding: 10px;
@@ -60,7 +60,18 @@ nav .navbar-brand{
     padding-top: 5%;
     padding-bottom: 2%;
     text-align: center;
-    background-color: #22391A; 
+    background-color: #22391A;
     font-family: "Krona One", sans-serif;
-    color:white; 
+    color:white;
+}
+
+#download-heading {
+  background-color: seagreen;
+  color: white;
+  padding: 5px;
+  border-radius: 5px;
+  margin-left: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 15%;
 }

@@ -216,6 +216,44 @@ d3.csv('Data/Covid/CovidAllYears.csv').then(function (data) {
     });
 });
 
+// Function to download CSV file
+function downloadCSV() {
+    var csvFilePath = "Data/Covid/CovidCases.csv";
+    var link = document.createElement("a");
+    link.href = csvFilePath;
+    link.download = "CovicCases.csv";
+    link.click();
+}
+
+// Function to download XLSX file
+function downloadXLSX() {
+    var xlsxFilePath = "Data/Covid/CovidCases.xlsx";
+    var link = document.createElement("a");
+    link.href = xlsxFilePath;
+    link.download = "CovicCases.xlsx";
+    link.click();
+}
+
+// Attach event listeners to download buttons
+document.getElementById("download-csv-button").addEventListener("click", downloadCSV);
+document.getElementById("download-xlsx-button").addEventListener("click", downloadXLSX);
+
+// Function to toggle download options and arrow icon
+function toggleDownloadOptions() {
+    var downloadOptions = document.getElementById("download-options");
+    var arrowIcon = document.getElementById("arrow-icon");
+    if (downloadOptions.style.display === "none") {
+        downloadOptions.style.display = "block";
+        arrowIcon.innerHTML = "&#9660;"; // Change arrow to down arrow
+    } else {
+        downloadOptions.style.display = "none";
+        arrowIcon.innerHTML = "&#128898;"; // Change arrow to right arrow
+    }
+}
+
+// Attach event listener to download heading
+document.getElementById("download-heading").addEventListener("click", toggleDownloadOptions);
+
 function toggleVisibility(year) {
     var isVisible = d3.selectAll(".line" + year).style("display") !== "none";
 

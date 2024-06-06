@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,12 +9,12 @@
   <title>Life Expectancy</title>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="css/notHomepage.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <nav class="navbar fixed-top">
     <div class="container-fluid">
@@ -59,11 +58,18 @@
       <button id="year2022" class="yearButton" type="button"
         onclick="setActiveButton('year2022', 'Data/LifeExpectancy/LifeExpectancy2022.csv')">2022</button>
     </div><br>
-  </div>
+    <div>
+      <h5 id="download-heading">Download Raw Data: <span id="arrow-icon">&#128898;</span></h5>
+      <div id="download-options" style="display: none;">
+        <button id="download-csv-button" type="button">Download as CSV</button><br>
+        <button id="download-xlsx-button" type="button">Download as XLSX</button><br>
+      </div>
+    </div>
 
+
+  </div>
   <svg width="980" height="400"></svg><br>
   <p>This here will be info about the Visual</p><br><br>
   <script src="LifeExpectancy.js"></script>
 </body>
-
 </html>
