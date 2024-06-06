@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +9,16 @@
   <title>Life Expectancy</title>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="https://d3js.org/d3.v7.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <link rel="stylesheet" href="css/notHomepage.css">
   <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Krona+One&display=swap" rel="stylesheet">
 </head>
-
 <body>
   <nav class="navbar fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="Homepage.html">MT</a>
+      <a class="navbar-brand" href="index.html">MT</a>
       <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
         aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -59,8 +58,16 @@
       <button id="year2022" class="yearButton" type="button"
         onclick="setActiveButton('year2022', 'Data/LifeExpectancy/LifeExpectancy2022.csv')">2022</button>
     </div><br>
-  </div>
+    <div>
+      <h5 id="download-heading">Download Raw Data: <span id="arrow-icon">&#128898;</span></h5>
+      <div id="download-options" style="display: none;">
+        <button id="download-csv-button" type="button">Download as CSV</button><br>
+        <button id="download-xlsx-button" type="button">Download as XLSX</button><br>
+      </div>
+    </div>
 
+
+  </div>
   <svg width="980" height="400"></svg><br>
   <div class="description">
   <p>Figure 3: Comparison of Life Expectancy Across Developed Nations (Source: Organisation for Economic Co-operation and Development)</p><br><br>
@@ -74,5 +81,4 @@
 
 </footer>
 </body>
-
 </html>

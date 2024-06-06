@@ -20,7 +20,7 @@
 <body>
     <nav class="navbar fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="Homepage.html">MT</a>
+          <a class="navbar-brand" href="index.html">MT</a>
           <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -56,6 +56,13 @@
             <button id="year2022" class="yearButton" type="button"
                 onclick="setActiveButton('year2022', 'Data/Death/Deaths2022.csv')">2022</button>
         </div><br>
+        <div>
+          <h5 id="download-heading">Download Raw Data: <span id="arrow-icon">&#128898;</span></h5>
+          <div id="download-options" style="display: none;">
+            <button id="download-csv-button" type="button">Download as CSV</button><br>
+            <button id="download-xlsx-button" type="button">Download as XLSX</button><br>
+          </div>
+        </div>
     </div>
 
     <svg width="980" height="500"></svg><br>
