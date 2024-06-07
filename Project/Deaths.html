@@ -18,34 +18,38 @@
 </head>
 
 <body>
-    <nav class="navbar fixed-top">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="index.html">MT</a>
-          <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+  <nav class="navbar fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index.html">MT</a>
+        <button class="navbar-toggler " type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar"
+            aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
-          </button>
-    <!--side bar-->
-          <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        </button>
+        <!--side bar-->
+        <div class="sidebar offcanvas offcanvas-end" tabindex="-1" id="offcanvasNavbar"
+            aria-labelledby="offcanvasNavbarLabel">
             <div class="offcanvas-header">
-              <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Data</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Our Data</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-              <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item">
-                    <a class="nav-link" href="Covid.html"> 01 Deaths Due to COVID-19 by Year and Month of Occurrence </a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link active" aria-current="page" href="Deaths.html"> 02 Established Causes of Death </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="LifeExpectancy.html"> 03 Life Expectancy by Countries</a>
-                  </li>
-              </ul>
+                <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                    <li class="nav-item">
+                        <a class="nav-link active " aria-current="page" href="Deaths.html"> 01 Established Causes of Death
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="Covid.html"> 02 Deaths Due to COVID-19 by Year and Month of
+                            Occurrence </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="LifeExpectancy.html"> 03 Life Expectancy by Countries</a>
+                    </li>
+                </ul>
             </div>
-          </div>
         </div>
-    </nav>
+    </div>
+</nav>
     <div class="gragh">
         <div class="charts-text">
             <p>Established Causes of Death</p>
@@ -67,10 +71,11 @@
 
     <svg width="980" height="500"></svg><br>
     <div class="description">
-    <p>Figure 2: Distribution of Leading Causes of Death in Australia (Source: Australian Bureau of Statistics)</p><br><br>
-    <p>This line graph tracks the impact of COVID-19 on Australian mortality over time. By analyzing trends,
-      potential infection waves, and changes in death rates, we can assess the effectiveness of public health measures and
-      inform future strategies to mitigate future outbreaks.</p><br>
+      <p>Figure 1: Distribution of Leading Causes of Death in Australia (Source: Australian Bureau of Statistics)</p><br>
+      <p>This pie chart reveals the leading causes of death in Australia. By understanding the mortality landscape, we can identify areas requiring ongoing public health focus and prioritize interventions to improve population health outcomes.</p>
+      <p>As you can see, The top 3 leading causes of death has changed between 2021 and 2022. In 2021, the top 3 causes of death in Australia are Heart Disease(23.54%), Dementia(17.83%), and Cerebrovascular Disease(10.99%).
+        in 2022, a major change occured, with Heart Disease (21.76%) and Cerebrovascular Disease (16.49%) still being the top 2, but a massive increase in COVID-19 deaths, now ranked 3rd (9.51%).</p>
+      <p>For interactivity, you can change which year is displayed in the Pie chart. By hovering over each sector, you can see more details about each cause.</p>
     </div>
     <script src="Deaths.js"></script>
 

@@ -1,6 +1,4 @@
-
-
-.image-container{
+.image-container {
     color: #ffe203;
     font-family: "Krona One", sans-serif;
     font-weight: 400;
@@ -8,53 +6,58 @@
 
 }
 
-nav .navbar-brand{
+nav .navbar-brand {
     color: #ffe203;
     font-family: "Krona One", sans-serif;
     font-weight: 600;
     font-size: 30px;
 }
 
-
-@media (max-width: 991px){
-    .sidebar{
+@media (max-width: 991px) {
+    .sidebar {
         background-color: rgba(255, 255, 255, 0.15);
         backdrop-filter: blur(10px);
     }
 }
+
 /* the first page with text ontop */
 .image-container {
-    position: relative; /* Needed for absolute positioning of child */
-  }
+    position: relative;
+    /* Needed for absolute positioning of child */
+}
 
-  .image-container img {
-    width: 100%; /* Optional: Adjust image width if needed */
+.image-container img {
+    width: 100%;
+    /* Optional: Adjust image width if needed */
     display: block;
-  }
+}
 
-  .image-container p {
+.image-container p {
     position: absolute;
     top: 15%;
     left: 5%;
     right: 30%;
-    color: rgb(255, 255, 255); /* Example text color */
-    background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+    color: rgb(255, 255, 255);
+    /* Example text color */
+    background-color: rgba(0, 0, 0, 0);
+    /* Semi-transparent background */
     padding: 10px;
     font-size: 70px;
-  }
+}
 
-  .image-container a {
+.image-container a {
     position: absolute;
     top: 55%;
     left: 70%;
     right: 10%;
     color: #ffe203;
-    background-color: rgba(0, 0, 0, 0); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0);
+    /* Semi-transparent background */
     padding: 10px;
     font-size: 25px;
-  }
+}
 
-.overview{
+.overview {
     padding-top: 10px;
     padding-bottom: 2%;
     padding-left: 2%;
@@ -63,19 +66,20 @@ nav .navbar-brand{
     margin-left: 20px;
     background-color: #5B687F;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
-.overview div{
+
+.overview div {
 
     padding-left: 30%;
     padding-right: 10%;
     background-color: #5B687F;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 
 }
 
-.overview2{
+.overview2 {
 
     padding-top: 10px;
     padding-bottom: 2%;
@@ -85,21 +89,26 @@ nav .navbar-brand{
     margin-left: 20px;
     background-color: #5B687F;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
-.ove2heading{
+
+.ove2heading {
     padding-left: 40%;
     font-size: 25px;
 
 }
+
 .styled-line {
     margin-top: 5%;
     margin-bottom: 5%;
     margin-left: 2%;
     margin-right: 5%;
-    height: 5px; /* Set the height of the line */
-    background-color: #5B687F; /* Set the background color of the line */
-    width: 95%; /* Set the width of the line */
+    height: 5px;
+    /* Set the height of the line */
+    background-color: #5B687F;
+    /* Set the background color of the line */
+    width: 95%;
+    /* Set the width of the line */
 }
 
 
@@ -107,9 +116,9 @@ nav .navbar-brand{
 .text {
     padding-top: 2%;
     padding-bottom: 5%;
-    text-align: center ;
+    text-align: center;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
 
 .text2 {
@@ -118,31 +127,35 @@ nav .navbar-brand{
     padding-top: 2%;
     padding-bottom: 5%;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
 
 
 .text2 div {
-    text-align: center ;
+    text-align: center;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
 
 /* image and text*/
 .card-link {
-    text-decoration: none; /* Remove underline from link */
-    color: inherit; /* Inherit text color */
-  }
-  
-.card{
-    
+    text-decoration: none;
+    /* Remove underline from link */
+    color: inherit;
+    /* Inherit text color */
+}
+
+.card {
+
     transition: all 0.3s;
 }
-.big-container{
+
+.big-container {
     background-color: #384152;
     padding-top: 20px;
 }
-.card:hover{
+
+.card:hover {
     transform: scale(1.15);
 }
 
@@ -180,22 +193,35 @@ nav .navbar-brand{
 
 
 
-.footer{
+.footer {
     padding-top: 5%;
     padding-bottom: 2%;
     text-align: center;
     background-color: #384152;
     font-family: "Krona One", sans-serif;
-    color:white;
+    color: white;
 }
 
-#seeMore{
-    color: #ffe203;
-    background-color: #22391A;
+#Welcome1 {
+    font-size: medium;
+    background-color: #384152;
     font-family: "Krona One", sans-serif;
-    font-size: 40px;
-    border-radius: 10px;
-    padding: 10px;
-    width: 150%;
-    white-space: nowrap;
+    color: white;
+    margin-top: 250px;
+}
+
+#Welcome2 {
+    font-size: medium;
+    background-color: #384152;
+    font-family: "Krona One", sans-serif;
+    color: white;
+    margin-top: 330px;
+}
+
+#emailHelp{
+    color: white;
+}
+.form-label {
+    color: white; /* Set custom text color */
+    font-family: "Krona One", sans-serif;
 }
